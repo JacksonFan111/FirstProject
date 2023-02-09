@@ -1,0 +1,75 @@
+{
+	"name": "Json_input",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "package.json",
+				"container": "adf-input"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"version": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"main": {
+					"type": "string"
+				},
+				"scripts": {
+					"type": "object",
+					"properties": {
+						"test": {
+							"type": "string"
+						}
+					}
+				},
+				"repository": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"url": {
+							"type": "string"
+						}
+					}
+				},
+				"keywords": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"license": {
+					"type": "string"
+				},
+				"bugs": {
+					"type": "object",
+					"properties": {
+						"url": {
+							"type": "string"
+						}
+					}
+				},
+				"homepage": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

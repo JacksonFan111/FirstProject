@@ -1,0 +1,17 @@
+{
+	"name": "trigger3",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/demofile/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/321a0e15-f849-4a60-bc00-31a7f21a45bb/resourceGroups/MOCATAD_EV2_AE/providers/Microsoft.Storage/storageAccounts/storagetestjf",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

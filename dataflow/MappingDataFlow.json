@@ -1,0 +1,92 @@
+{
+	"name": "MappingDataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_Product",
+						"type": "DatasetReference"
+					},
+					"name": "Product"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_ProductCategory",
+						"type": "DatasetReference"
+					},
+					"name": "ProductCategory"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_Product_ProdCat",
+						"type": "DatasetReference"
+					},
+					"name": "ProductOutput"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinProductandProductCategory"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          Color as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          Weight as string,",
+				"          ProductCategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Product",
+				"source(output(",
+				"          ProductCategoryID as string,",
+				"          ParentProductCategoryID as string,",
+				"          Name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ProductCategory",
+				"Product, ProductCategory join(Product@ProductCategoryID == ProductCategory@ProductCategoryID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinProductandProductCategory",
+				"JoinProductandProductCategory sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          ProductID,",
+				"          Name = Product@Name,",
+				"          ProductNumber,",
+				"          Color,",
+				"          StandardCost,",
+				"          ListPrice,",
+				"          Size,",
+				"          Weight,",
+				"          ProductCategoryID = Product@ProductCategoryID,",
+				"          ProductModelID,",
+				"          SellStartDate,",
+				"          SellEndDate,",
+				"          ModifiedDate,",
+				"          ParentProductCategoryID,",
+				"          ProductCategoryName = ProductCategory@Name",
+				"     )) ~> ProductOutput"
+			]
+		}
+	}
+}
